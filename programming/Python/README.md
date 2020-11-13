@@ -5,6 +5,6 @@
 
 <p align="center">
   
-//<img src="./images/EdCoourse.JPG"  width="640" height="300">
+<img src="./images/EdCoourse.JPG"  width="640" height="300">
 
 </p>
