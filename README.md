@@ -2,13 +2,13 @@
 
 ## Introduction
 
-2020년 8월 설립된 재직자 대상 계약학과입니다.
+산업인공지능학과 오픈 포트폴리오 입니다.
 
-4차 산업혁명을 주도할 창의적 문제해결 능력을 갖춘 인공지능 관련 전문가를 육성하는 것을 목표로 하고 있습니다.
+4차 산업혁명을 주도할 창의적 문제해결 능력을 갖춰 인공지능 관련 기술을 산업&현업에 적용하는 것을 목표로 하고 있습니다.
 
 ## Contacts
 
-- 이메일 : [ind-AI:mail](mailto:indai.cbnu.ac.kr)
+- 이메일 : _hwani3115@cmcst.co.kr_
 - **학과홈페이지** : [ind-AI](https://github.com/industrial-AI)
 
 ## Educational Course
@@ -35,9 +35,5 @@
 ### GitHub 교육
 
 - `2020-10` [GitHub이용및포트폴리오작성자료](https://github.com/Bessesian/industrial-AI/tree/master/Education): 포트폴리오 관리 자료
-
-### 재학생 포트폴리오 현황
-
-- `2020-11` [재학생이름](GitHub link): 재학생 GitHub 포트폴리오 주소
 
 
