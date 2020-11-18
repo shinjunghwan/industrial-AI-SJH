@@ -8,7 +8,7 @@
 
 ## Contacts
 
-- 이메일 : _hwani3115@cmcst.co.kr_
+- **이메일** : **hwani3115@cmcst.co.kr**
 - **학과홈페이지** : [ind-AI](https://github.com/industrial-AI)
 
 ## Educational Course
