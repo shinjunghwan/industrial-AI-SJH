@@ -43,6 +43,10 @@ F/W 개발자로써 다양한 산업용 전자기기, 의료기기등을 개발�
 ## 사용언어 및 기술
 
 메인은 C
+</br>
 그 외 C++/C#/Java(jsp,spring), html, javascript, sql 등 조금씩...
+</br>
 사용 MCU계열 : ST, Nuvoton, Renesas, Atmega 등 
+</br>
 Cortex-M0~M4, arm9 암시리즈를 주로 사용합니다.
+</br>
