@@ -36,4 +36,13 @@
 
 - `2020-10` [GitHub이용및포트폴리오작성자료](https://github.com/Bessesian/industrial-AI/tree/master/Education): 포트폴리오 관리 자료
 
+## 소개
 
+F/W 개발자로써 다양한 산업용 전자기기, 의료기기등을 개발하고 있습니다.
+
+## 사용언어 및 기술
+
+메인은 C
+그 외 C++/C#/Java(jsp,spring), html, javascript, sql 등 조금씩...
+사용 MCU계열 : ST, Nuvoton, Renesas, Atmega 등 
+Cortex-M0~M4, arm9 암시리즈를 주로 사용합니다.
