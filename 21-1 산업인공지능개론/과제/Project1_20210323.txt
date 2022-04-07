@@ -1,0 +1,120 @@
+from durable.lang import *
+
+with ruleset('회로'):
+    @when_all(c.first << (m.predicate == '보드가') & (m.object == '동작하지 않는다.'),
+              (m.predicate == '보드의') & (m.object == '문제해결 방법이다.') & (m.subject == c.first.subject))
+    def 냉납(c):
+        c.assert_fact({ 'subject': c.first.subject, 'predicate': '보드를', 'object': '리터치한다' })
+
+    @when_all(c.first << (m.predicate == '보드가') & (m.object == '동작하지않는다.'),
+              (m.predicate == '보드의') & (m.object == '문제해결 방법이다.') & (m.subject == c.first.subject))
+    def 쇼트(c):
+        c.assert_fact({'subject': c.first.subject, 'predicate': '보드의', 'object': 'VCC,GND를 확인한다'})
+
+    @when_all(c.first << (m.predicate == '보드가') & (m.object == '오동작 한다.'),
+              (m.predicate == '오동작 보드의') & (m.object == '문제해결 방법이다.') & (m.subject == c.first.subject))
+    def 설계(c):
+        c.assert_fact({'subject': c.first.subject, 'predicate': '보드의', 'object': '회로설계 확인 및 디버깅한다'})
+
+    @when_all(c.first << (m.predicate == '보드가') & (m.object == '오동작 한다.'),
+              (m.predicate == '보드의') & (m.object == '문제해결 방법이다.') & (m.subject == c.first.subject))
+    def IC(c):
+        c.assert_fact({'subject': c.first.subject, 'predicate': 'IC의', 'object': 'DataSheet를 참고 및 교체한다.'})
+
+    @when_all(c.first << (m.predicate == '노이즈') & (m.object == '감지시'),
+              (m.predicate == '노이즈') & (m.object == '문제해결 방법이다.') & (m.subject == c.first.subject))
+    def 노이즈(c):
+        c.assert_fact({'subject': c.first.subject, 'predicate': 'SMPS', 'object': 'CAP용랑 변경이'})
+
+
+    @when_all(+m.subject)
+    def output(c):
+        print('Fact: {0} {1} {2}'.format(c.m.subject, c.m.predicate, c.m.object))
+
+
+assert_fact('회로', { 'subject': '냉납일경우', 'predicate': '보드가', 'object': '동작하지 않는다.' })
+assert_fact('회로', { 'subject': '냉납일경우', 'predicate': '보드의', 'object': '문제해결 방법이다.' })
+assert_fact('회로', { 'subject': '쇼트일경우', 'predicate': '보드가', 'object': '동작하지않는다.' })
+assert_fact('회로', { 'subject': '쇼트일경우', 'predicate': '보드의', 'object': '문제해결 방법이다.' })
+assert_fact('회로', { 'subject': '회로설계의 문제일 경우', 'predicate': '보드가', 'object': '오동작 한다.' })
+assert_fact('회로', { 'subject': '회로설계의 문제일 경우', 'predicate': '오동작 보드의', 'object': '문제해결 방법이다.' })
+assert_fact('회로', { 'subject': '보드 부품의 문제일 경우', 'predicate': '보드가', 'object': '오동작 한다.' })
+assert_fact('회로', { 'subject': '보드 부품의 문제일 경우', 'predicate': '보드의', 'object': '문제해결 방법이다.' })
+assert_fact('회로', { 'subject': '보드의', 'predicate': '노이즈', 'object': '감지시' })
+assert_fact('회로', { 'subject': '보드의', 'predicate': '노이즈', 'object': '문제해결 방법이다.' })
+
+
+with ruleset('펌웨어'):
+    @when_all(c.first << (m.predicate == '다운로드가') & (m.object == '안된다.'),
+              (m.predicate == '다운로드') & (m.object == '문제해결 방법이다.') & (m.subject == c.first.subject))
+    def 다운로드(c):
+        c.assert_fact({ 'subject': c.first.subject, 'predicate': '보드의', 'object': '전원인가 확인한다.' })
+
+    @when_all((m.predicate == '보드의') & (m.object == '전원인가 확인한다.'))
+    def MCU(c):
+        c.assert_fact({ 'subject': c.m.subject, 'predicate': '보드의 MCU를', 'object': '확인한다.' })
+
+    @when_all((m.predicate == '보드의') & (m.object == '전원인가 확인한다.'))
+    def 디버거(c):
+        c.assert_fact({ 'subject': c.m.subject, 'predicate': '디버거의 PIN 맵을', 'object': '확인한다.' })
+
+    @when_all((m.predicate == '디버거의 PIN 맵을') & (m.object == '확인한다.'))
+    def 접촉(c):
+        c.assert_fact({ 'subject': c.m.subject, 'predicate': '디버거 PIN의', 'object': '접촉 상태를 확인한다.' })
+
+    @when_all((m.predicate == '보드의') & (m.object == '전원인가 확인한다.'))
+    def CLOCK(c):
+        c.assert_fact({'subject': c.m.subject, 'predicate': '크리스탈의 클럭을', 'object': '확인한다.'})
+
+    @when_all(c.first << (m.predicate == '버전') & (m.object == '오류시'),
+              (m.predicate == '버전') & (m.object == '문제해결 방법이다.') & (m.subject == c.first.subject))
+    def TOOL(c):
+        c.assert_fact({'subject': c.first.subject, 'predicate': '의', 'object': '버전 업데이트 진행이'})
+
+    @when_all(c.first << (m.predicate == '의') & (m.object == '버그발생시'),
+              (m.predicate == '버그의') & (m.object == '문제해결 방법이다.') & (m.subject == c.first.subject))
+    def 버그(c):
+        c.assert_fact({'subject': c.first.subject, 'predicate': '의', 'object': '알고리즘 확인한다'})
+
+
+    @when_all(+m.subject)
+    def output(c):
+        print('Fact: {0} {1} {2}'.format(c.m.subject, c.m.predicate, c.m.object))
+
+
+assert_fact('펌웨어', { 'subject': 'F/W', 'predicate': '다운로드가', 'object': '안된다.' })
+assert_fact('펌웨어', { 'subject': 'F/W', 'predicate': '다운로드', 'object': '문제해결 방법이다.' })
+assert_fact('펌웨어', { 'subject': 'F/W', 'predicate': '의', 'object': '버그발생시' })
+assert_fact('펌웨어', { 'subject': 'F/W', 'predicate': '버그의', 'object': '문제해결 방법이다.' })
+assert_fact('펌웨어', { 'subject': 'S/W TOOL', 'predicate': '버전', 'object': '오류시' })
+assert_fact('펌웨어', { 'subject': 'S/W TOOL', 'predicate': '버전', 'object': '문제해결 방법이다.' })
+
+
+with ruleset('전류계측'):
+    @when_all(c.first << (m.predicate == '정밀도가') & (m.object == '낮다.'),
+              (m.predicate == '정밀도 향상의') & (m.object == '문제해결 방법이다.') & (m.subject == c.first.subject))
+    def 정밀도(c):
+        c.assert_fact({ 'subject': c.first.subject, 'predicate': '시작시', 'object': 'Calibration 실행한다' })
+
+    @when_all((m.predicate == '시작시') & (m.object == 'Calibration 실행한다'))
+    def ADC(c):
+        c.assert_fact({'subject': c.m.subject, 'predicate': 'ADC Clock을', 'object': '변경한다.'})
+
+    @when_all((m.predicate == '시작시') & (m.object == 'Calibration 실행한다'))
+    def CT(c):
+        c.assert_fact({'subject': c.m.subject, 'predicate': 'CT비를', 'object': '변경한다.'})
+
+    @when_all(c.first << (m.predicate == '의') & (m.object == '부하발생시'),
+              (m.predicate == '부하발생시') & (m.object == '문제해결 방법이다.') & (m.subject == c.first.subject))
+    def 전류의부하(c):
+        c.assert_fact({'subject': c.first.subject, 'predicate': '3상의', 'object': '부하저항을 높이는것이'})
+
+    @when_all(+m.subject)
+    def output(c):
+        print('Fact: {0} {1} {2}'.format(c.m.subject, c.m.predicate, c.m.object))
+
+
+assert_fact('전류계측', { 'subject': '전류계측', 'predicate': '정밀도가', 'object': '낮다.' })
+assert_fact('전류계측', { 'subject': '전류계측', 'predicate': '정밀도 향상의', 'object': '문제해결 방법이다.' })
+assert_fact('전류계측', { 'subject': '전류', 'predicate': '의', 'object': '부하발생시' })
+assert_fact('전류계측', { 'subject': '전류', 'predicate': '부하발생시', 'object': '문제해결 방법이다.' })
