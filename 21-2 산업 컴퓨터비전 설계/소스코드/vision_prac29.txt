@@ -1,0 +1,22 @@
+import cv2
+import numpy as np
+
+images = []
+images.append(cv2.imread('panorama0.jpg', cv2.IMREAD_COLOR))
+images.append(cv2.imread('panorama1.jpg', cv2.IMREAD_COLOR))
+
+##stitcher = cv2.createStitcher()
+##ret, pano = stitcher.stitch(images)
+stitcher = cv2.Stitcher.create() ##if imutils.is_cv3() else cv2.Stitcher_create()
+result = np.empty(shape=[2048,2048])
+status, stitched = stitcher.stitch(images,result)
+
+if status == cv2.STITCHER_OK:
+    pano = cv2.resize(stitched, dsize=(0,0), fx=0.2, fy=0.2)
+    cv2.imshow('panorama', pano)
+    cv2.waitKey()
+
+    cv2.destoryAllWindows()
+
+else :
+    print('error')

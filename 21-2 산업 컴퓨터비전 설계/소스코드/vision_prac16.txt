@@ -1,0 +1,27 @@
+import cv2, random
+import numpy as np
+import matplotlib.pyplot as plt
+###4번문제 : 영상을 이진화 후에 사용자로부터 Erosion, Dilation, Opening, Closing에 대한 선택과 횟수를 입력받아 적용한 결과를 출력
+src = cv2.imread('lena.png', 0)
+thr_val, src = cv2.threshold(src, 0, 255, cv2.THRESH_BINARY | cv2.THRESH_OTSU) ##otsu 임계값 사용 이진화
+count = 0
+kernel_size = int(input('커널크기 입력 : ')) ##모폴로지 커널크기 입력
+kernel = np.ones((kernel_size, kernel_size), np.uint8) ##커널 생성
+finish = False
+while not finish:
+    cv2.imshow("image", src) ##적용된 이미지 출력
+    key = cv2.waitKey(0)
+    if key == ord('e'): ##침식
+        count = int(input('Erosion 횟수 입력 : '))
+        src = cv2.erode(src, kernel, iterations=count)
+    elif key == ord('d'): ##팽창
+        count = int(input('Dilation 횟수 입력 : '))
+        src = cv2.dilate(src, kernel, iterations=count)
+    elif key == ord('o'): ##오프닝
+        count = int(input('Opening 횟수 입력 : '))
+        src = cv2.morphologyEx(src, cv2.MORPH_OPEN, kernel, iterations=count)
+    elif key == ord('c'): ##클로징
+        count = int(input('Closing 횟수 입력 : '))
+        src = cv2.morphologyEx(src, cv2.MORPH_CLOSE, kernel, iterations=count)
+    elif key == 27: ##종료
+        finish = True

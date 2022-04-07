@@ -1,0 +1,21 @@
+import cv2
+import numpy as np
+
+img = cv2.imread('scenetext01.jpg', cv2.IMREAD_COLOR)
+
+orb = cv2.ORB_create()
+orb.setMaxFeatures(200)
+
+KeyPoints = orb.detect(img,None)
+KeyPoints, descriptors = orb.compute(img, KeyPoints)
+show_img = cv2.drawKeypoints(img, KeyPoints, None, (0, 0, 255), cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
+cv2.imshow('ORB',show_img)
+
+brief = cv2.xfeatures2d.BriefDescriptorExtractor_create(32, True)
+
+KeyPoints, descriptors = brief.compute(img, KeyPoints)
+show_img = cv2.drawKeypoints(img, KeyPoints, None, (0, 255, 0), cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
+
+cv2.imshow('BRIEF',show_img)
+cv2.waitKey()
+cv2.destroyAllWindows()

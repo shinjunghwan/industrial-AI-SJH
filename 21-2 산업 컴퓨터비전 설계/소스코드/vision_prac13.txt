@@ -1,0 +1,48 @@
+import cv2, random
+import numpy as np
+import matplotlib.pyplot as plt
+###1번문제 : 사용자로부터 R,G,B중 하나의 채널을 입력받아 입력받은 채널에 대한 히스토그램을 그리고 평탄화를 한 후에 출력(입력받은 채널 외 다른채널은 변하지 않음)
+src = cv2.imread('lena.png', cv2.IMREAD_COLOR)
+b, g, r = cv2.split(src) ##BGR채널 분리
+finish = False
+while not finish:
+    cv2.imshow("image", src) ##원본 이미지
+    key = cv2.waitKey(0)
+    if key == ord('r'): ##레드 채널 평활화
+        hist, bins = np.histogram(r, 256, [0, 255]) ##히스토그램 출력
+        plt.fill(hist)
+        plt.xlabel('red hist')
+        plt.show()
+        red_eq = cv2.equalizeHist(r)        ##평활화 히스토그램출력
+        hist, bins = np.histogram(red_eq, 256, [0, 255])
+        plt.fill(hist)
+        plt.xlabel('red eq hist')
+        plt.show()
+        result = cv2.merge((b, g, red_eq))  ##평활화된 RED채널과 병합
+        cv2.imshow('resultR',result)
+    elif key == ord('g'): ##그린 채널 평활화
+        hist, bins = np.histogram(g, 256, [0, 255])
+        plt.fill(hist)
+        plt.xlabel('green hist')
+        plt.show()
+        green_eq = cv2.equalizeHist(g)
+        hist, bins = np.histogram(green_eq, 256, [0, 255])
+        plt.fill(hist)
+        plt.xlabel('green eq hist')
+        plt.show()
+        result = cv2.merge((b, green_eq, r))
+        cv2.imshow('resultG', result)
+    elif key == ord('b'): ##블루 채널 평활화
+        hist, bins = np.histogram(b, 256, [0, 255])
+        plt.fill(hist)
+        plt.xlabel('blue hist')
+        plt.show()
+        blue_eq = cv2.equalizeHist(b)
+        hist, bins = np.histogram(blue_eq, 256, [0, 255])
+        plt.fill(hist)
+        plt.xlabel('blue eq hist')
+        plt.show()
+        result = cv2.merge((blue_eq, g, r))
+        cv2.imshow('resultB', result)
+    elif key == 27: ##종료
+        finish = True

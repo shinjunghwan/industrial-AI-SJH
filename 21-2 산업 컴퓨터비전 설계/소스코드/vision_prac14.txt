@@ -1,0 +1,19 @@
+import cv2, random
+import numpy as np
+import matplotlib.pyplot as plt
+###2번문제 : 각 픽셀에 임의의 값을 더해 노이즈를 생성하고, 사용자로부터 파라미터를 입력받아 
+###bilateralfilter사용하여 노이즈를 제거하고 노이즈 제거 전후의 영상을 출력
+src = cv2.imread('lena.png', cv2.IMREAD_COLOR)
+w, h = src.shape[1], src.shape[0]
+##파라미터 입력
+diameter = int(input('diameter : '))
+sigmacolor = int(input('sigmacolor : '))
+sigmaspace = int(input('sigmaspace : '))
+##랜덤 노이즈 생성
+for x in range(5000):
+    src.itemset(random.randrange(h),random.randrange(w),random.randrange(2),random.randrange(255))
+##bilateral filter 적용
+blur = cv2.bilateralFilter(src,diameter,sigmacolor,sigmaspace)
+cv2.imshow('src',src)
+cv2.imshow('blur',blur)
+cv2.waitKey(0)

@@ -1,0 +1,59 @@
+import cv2, random
+import numpy as np
+import matplotlib.pyplot as plt
+###3번문제 : DFT를 통해 영상을 주파수 도메인으로 바꿔 출력 한 후에 사용자로부터 반지름을 입력받아 그 크기만큼 원을 그린후 DFT결과에 곱해주고
+##IDFT를 해서 필터링된 영상을 출력하시오. 사용자로부터 Low pass인지 high pass인지 입력받아 low면 원안으로 high면 원밖으로 통과시키고 영상 출력
+src = cv2.imread('lena.png', 0).astype(np.float32) / 255
+h, w = src.shape
+row, col = int(h / 2), int(w / 2) ##중심 값 원의 중심좌표 활용
+fft = cv2.dft(src, flags=cv2.DFT_COMPLEX_OUTPUT)
+shifted = np.fft.fftshift(fft) #, axes=[0, 1]
+magnitude = cv2.magnitude(shifted[:,:,0], shifted[:,:,1])
+magnitude = np.log(magnitude) ##주파수 도메인
+plt.axis('off')
+plt.imshow(magnitude, cmap='gray')
+plt.tight_layout()
+plt.show()
+r = int(input('반지름을 입력하시오 : '))
+filter = input('L or H를 입력하시오 : ')
+
+LPF = np.zeros((h, w, 2), np.uint8)
+HPF = np.ones((h, w, 2), np.uint8)
+
+for a in range(h):
+    for b in range(w):
+        if (((a - row) * (a - row)) + ((b - col) * (b - col))) <= (r * r):
+            LPF[a, b] = 1 ##저주파는 해당영역 활성
+            HPF[a, b] = 0 ##고주파는 해당영역 비활성
+
+LPF_shift = shifted * LPF
+LPF_ishift = np.fft.ifftshift(LPF_shift)
+LPF_img = cv2.idft(LPF_ishift)
+LPF_img = cv2.magnitude(LPF_img[:,:,0], LPF_img[:,:,1])
+outL = 20*np.log(cv2.magnitude(LPF_shift[:,:,0], LPF_shift[:,:,1]))
+HPF_shift = shifted * HPF
+HPF_ishift = np.fft.ifftshift(HPF_shift)
+HPF_img = cv2.idft(HPF_ishift)
+HPF_img = cv2.magnitude(HPF_img[:,:,0], HPF_img[:,:,1])
+outH = 20*np.log(cv2.magnitude(HPF_shift[:,:,0], HPF_shift[:,:,1]))
+restored = cv2.idft(fft, flags=cv2.DFT_SCALE | cv2.DFT_REAL_OUTPUT)
+
+if filter == 'L' :
+    restored1 = cv2.idft(LPF_ishift, flags=cv2.DFT_SCALE | cv2.DFT_REAL_OUTPUT)
+    plt.axis('off')
+    plt.imshow(outL, cmap='gray')
+    plt.tight_layout()
+    plt.show()
+    cv2.imshow('res', restored)
+    cv2.imshow('low', restored1)
+else :
+    restored2 = cv2.idft(HPF_ishift, flags=cv2.DFT_SCALE | cv2.DFT_REAL_OUTPUT)
+    plt.axis('off')
+    plt.imshow(outH, cmap='gray')
+    plt.tight_layout()
+    plt.show()
+    cv2.imshow('res', restored)
+    cv2.imshow('high', restored2)
+
+cv2.waitKey(0)
+cv2.destroyAllWindows()

@@ -1,0 +1,16 @@
+import cv2
+import numpy as np
+
+image = cv2.imread('lena_comp.png').astype(np.float32) / 255
+cv2.imshow("ori img", image)
+
+gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+cv2.imshow("gray", gray)
+
+hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
+hsv[:, :, 2] *= 2
+from_hsv = cv2.cvtColor(hsv, cv2.COLOR_HSV2BGR)
+
+cv2.imshow("from_hsv", from_hsv)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
