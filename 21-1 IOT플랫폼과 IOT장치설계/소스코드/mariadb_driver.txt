@@ -1,0 +1,4 @@
+wget https://downloads.mariadb.com/Connectors/java/latest/mariadb-java-client-2.3.0.jar
+class.forname("org.mariadb.jdbc.Driver")
+엔드포인트 : database1.cymfuyeuxfkl.ap-northeast-2.rds.amazonaws.com
+root / xxxx

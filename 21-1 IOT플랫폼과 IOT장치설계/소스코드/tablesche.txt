@@ -1,0 +1,21 @@
+CREATE   TABLE  info (
+    code   CHAR ( 5 )   NOT   NULL,
+    irum   VARCHAR ( 20 ),  
+    celphone   VARCHAR ( 14 ),
+    PRIMARY   KEY (code )
+);
+
+--입력
+INSERT   INTO  info   VALUES ( 'A0001', '행운목', '010-1111-1111' );
+
+--삭제
+DELETE   FROM  info   WHERE  code =   'A0001';
+
+--변경
+UPDATE  info   SET  celphone= '010-0000-0000'   WHERE  code= 'A0001';
+
+--조회
+SELECT  *   FROM  info;
+
+-- 코드에 대한 상품 조회
+SELECT  *   FROM  info   WHERE  code= 'A0001';
